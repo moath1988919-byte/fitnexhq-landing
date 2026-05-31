@@ -318,6 +318,9 @@ body.ar .sec-h{font-family:var(--fa);font-style:normal;font-size:clamp(34px,4.5v
 .demo-form input::placeholder{color:rgba(226,234,248,.32)}
 .demo-form input:focus{border-color:rgba(0,212,255,.4);box-shadow:0 0 0 3px rgba(0,212,255,.06)}
 .demo-form button{white-space:nowrap;max-width:100%;min-width:0}
+.demo-status{grid-column:1/-1;font-size:12px;line-height:1.6;color:var(--dim);min-height:20px}
+.demo-status.ok{color:var(--cyan)}
+.demo-status.err{color:#fca5a5}
 @media(max-width:980px){.showcase-grid{grid-template-columns:1fr 1fr}.demo-form{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.demo-form button{grid-column:1/-1;width:100%;justify-self:stretch}}
 @media(max-width:560px){.showcase-grid{grid-template-columns:1fr}.demo-form{grid-template-columns:1fr}}
 
@@ -414,7 +417,7 @@ footer{
   </div>
   <div class="nav-right">
     <button class="lang-btn" onclick="toggleLang()" id="lang-btn">AR</button>
-    <button class="nav-cta" id="nav-cta" onclick="document.getElementById('cta-sec').scrollIntoView({behavior:'smooth'})">Request Access</button>
+    <button class="nav-cta" id="nav-cta" onclick="scrollToDemoForm()">Request Access</button>
   </div>
 </nav>
 
@@ -428,7 +431,7 @@ footer{
     <div class="hero-divider"></div>
     <p class="hero-sub" id="hero-sub">Manage trainers, clients, sessions, assessments, reports, and revenue from one intelligent platform built for ambitious fitness businesses.</p>
     <div class="hero-btns">
-      <button class="btn-c" id="btn-p" onclick="document.getElementById('cta-sec').scrollIntoView({behavior:'smooth'})">Book a Live Demo</button>
+      <button class="btn-c" id="btn-p" onclick="scrollToDemoForm()">Book a Live Demo</button>
       <button class="btn-o" id="btn-s" onclick="document.getElementById('platform').scrollIntoView({behavior:'smooth'})">Explore the Platform</button>
     </div>
   </div>
@@ -505,13 +508,17 @@ footer{
     <h2 class="sec-h" id="show-h">See the system your gym will run on.</h2>
     <p class="sec-sub" id="show-s">A premium command experience for owners, managers, trainers, and client progress.</p>
     <div class="showcase-grid" id="show-grid"></div>
-    <div class="demo-form">
-      <input id="demo-name" placeholder="Name" />
-      <input id="demo-gym" placeholder="Gym Name" />
-      <input id="demo-phone" placeholder="Phone / WhatsApp" />
-      <input id="demo-email" placeholder="Email" />
-      <button class="btn-c" id="demo-btn" type="button">Book Demo</button>
-    </div>
+    <form class="demo-form" id="demo-form" action="https://formsubmit.co/ajax/hello@fitnexhq.com" method="POST" novalidate>
+      <input type="hidden" name="_subject" value="FITNEX AI Lead Request" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input id="demo-name" name="Full Name" autocomplete="name" placeholder="Full Name" required />
+      <input id="demo-gym" name="Gym Name" autocomplete="organization" placeholder="Gym Name" required />
+      <input id="demo-email" name="Email" type="email" autocomplete="email" placeholder="Email" required />
+      <input id="demo-phone" name="Phone Number" type="tel" autocomplete="tel" placeholder="Phone Number" required />
+      <button class="btn-c" id="demo-btn" type="submit">Book Demo</button>
+      <div class="demo-status" id="demo-status" role="status" aria-live="polite"></div>
+    </form>
   </div>
 </section>
 
@@ -527,7 +534,7 @@ footer{
     <div class="cta-bg-w" id="cta-bg-w">LAUNCH</div>
     <h2 id="cta-h">Ready to Transform Your Gym?</h2>
     <p id="cta-p">Join the next generation of fitness businesses using technology, intelligence, and data to deliver better results.</p>
-    <button class="btn-c" id="cta-btn">Book a Live Demo</button>
+    <button class="btn-c" id="cta-btn" onclick="scrollToDemoForm()">Book a Live Demo</button>
   </div>
 </div>
 
@@ -582,7 +589,12 @@ const T={
       {t:'AI Posture Analysis',d:'Turn client assessments into clear insights and professional recommendations.'},
       {t:'Client Progress Reports',d:'Deliver premium reports that show progress, accountability, and value.'},
     ],
-    demoName:'Name',demoGym:'Gym Name',demoPhone:'Phone / WhatsApp',demoEmail:'Email',demoBtn:'Book Demo',
+    demoName:'Full Name',demoGym:'Gym Name',demoEmail:'Email',demoPhone:'Phone Number',demoBtn:'Book Demo',
+    demoRequired:'Please complete all fields before submitting.',
+    demoInvalid:'Please enter a valid email address.',
+    demoSending:'Sending your request...',
+    demoSuccess:'Thank you. Your request has been sent.',
+    demoError:'Something went wrong. Please try again or email hello@fitnexhq.com.',
     s5l:'THE FITNEX AI WORKFLOW',
     flow:['Schedule','Train','Assess','Analyze','Report','Grow'],
     ctaH:'Ready to Transform Your Gym?',
@@ -634,7 +646,12 @@ const T={
       {t:'تحليل القوام بالذكاء الاصطناعي',d:'حوّل تقييمات العملاء إلى رؤى واضحة وتوصيات احترافية.'},
       {t:'تقارير تقدم العملاء',d:'قدّم تقارير فاخرة تُظهر التقدم، الالتزام، والقيمة.'},
     ],
-    demoName:'الاسم',demoGym:'اسم النادي',demoPhone:'الهاتف / واتساب',demoEmail:'البريد الإلكتروني',demoBtn:'احجز ديمو',
+    demoName:'الاسم الكامل',demoGym:'اسم النادي',demoEmail:'البريد الإلكتروني',demoPhone:'رقم الهاتف',demoBtn:'احجز ديمو',
+    demoRequired:'يرجى إكمال جميع الحقول قبل الإرسال.',
+    demoInvalid:'يرجى إدخال بريد إلكتروني صحيح.',
+    demoSending:'جاري إرسال طلبك...',
+    demoSuccess:'شكرًا لك. تم إرسال طلبك.',
+    demoError:'حدث خطأ. يرجى المحاولة مرة أخرى أو مراسلة hello@fitnexhq.com.',
     s5l:'مسار عمل FITNEX AI',
     flow:['جدولة','تدريب','تقييم','تحليل','تقرير','نمو'],
     ctaH:'جاهز لتحويل ناديك؟',
@@ -648,6 +665,12 @@ let lang='en';
 function toggleLang(){lang=lang==='en'?'ar':'en';apply()}
 function s(id,v){const e=document.getElementById(id);if(e)e.textContent=v}
 function sh(id,v){const e=document.getElementById(id);if(e)e.innerHTML=v}
+function scrollToDemoForm(){document.getElementById('demo-form')?.scrollIntoView({behavior:'smooth',block:'center'})}
+function setDemoStatus(type,msg){
+  const el=document.getElementById('demo-status');if(!el)return;
+  el.className=`demo-status ${type||''}`.trim();
+  el.textContent=msg||'';
+}
 
 function apply(){
   const d=T[lang];
@@ -678,9 +701,10 @@ function apply(){
   document.getElementById('ai-grid').innerHTML=d.aiCards.map(c=>`<div class="ai-card"><div class="ai-bar"></div><h3>${c.t}</h3><p>${c.d}</p></div>`).join('');
   s('show-l',d.showL);sh('show-h',d.showH);s('show-s',d.showS);
   document.getElementById('show-grid').innerHTML=d.showCards.map(c=>`<div class="show-card"><div class="show-mini"><div class="show-line a"></div><div class="show-line b"></div><div class="show-line c"></div><div class="show-kpis"><span></span><span></span><span></span></div></div><h3>${c.t}</h3><p>${c.d}</p></div>`).join('');
-  const ph={ 'demo-name':d.demoName,'demo-gym':d.demoGym,'demo-phone':d.demoPhone,'demo-email':d.demoEmail};
+  const ph={ 'demo-name':d.demoName,'demo-gym':d.demoGym,'demo-email':d.demoEmail,'demo-phone':d.demoPhone};
   Object.keys(ph).forEach(id=>{const el=document.getElementById(id);if(el)el.placeholder=ph[id]});
   s('demo-btn',d.demoBtn);
+  setDemoStatus('', '');
   s('s5l',d.s5l);
   document.getElementById('flow-row').innerHTML=d.flow.map((step,i)=>`<span class="f-step">${step}</span>${i<d.flow.length-1?'<span class="f-arr">→</span>':''}`).join('');
   sh('cta-h',d.ctaH);s('cta-p',d.ctaP);s('cta-btn',d.ctaBtn);
@@ -720,14 +744,28 @@ function animateNums(){
 document.addEventListener('DOMContentLoaded',()=>{
   apply();
   document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-  const demo=document.getElementById('demo-btn');
-  if(demo){demo.addEventListener('click',()=>{
-    const name=document.getElementById('demo-name').value||'';
-    const gym=document.getElementById('demo-gym').value||'';
-    const phone=document.getElementById('demo-phone').value||'';
-    const email=document.getElementById('demo-email').value||'';
-    const body=encodeURIComponent(`Name: ${name}\nGym: ${gym}\nPhone/WhatsApp: ${phone}\nEmail: ${email}\n\nI would like to book a live demo for FITNEX AI.`);
-    window.location.href=`mailto:hello@fitnexai.com?subject=FITNEX AI Demo Request&body=${body}`;
+  const form=document.getElementById('demo-form');
+  if(form){form.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const d=T[lang];
+    const fields=['demo-name','demo-gym','demo-email','demo-phone'].map(id=>document.getElementById(id));
+    const empty=fields.some(el=>!el.value.trim());
+    if(empty){setDemoStatus('err',d.demoRequired);return}
+    const email=document.getElementById('demo-email');
+    if(!email.checkValidity()){setDemoStatus('err',d.demoInvalid);return}
+    const btn=document.getElementById('demo-btn');
+    btn.disabled=true;
+    setDemoStatus('',d.demoSending);
+    try{
+      const res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{Accept:'application/json'}});
+      if(!res.ok)throw new Error('Lead submission failed');
+      form.reset();
+      setDemoStatus('ok',d.demoSuccess);
+    }catch(err){
+      setDemoStatus('err',d.demoError);
+    }finally{
+      btn.disabled=false;
+    }
   })}
 });
 </script>
