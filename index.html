@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>FITNEX AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,900;1,900&family=Barlow:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  /* ── FITNEX AI Brand Colors ── */
+  --navy:  #020812;   /* Deep Navy — primary background */
+  --navy2: #06111f;   /* Slightly lighter navy — card surfaces */
+  --navy3: #0c1e38;   /* Navy for borders/hover */
+  --cyan:  #00d4ff;   /* Brand Cyan — primary accent */
+  --blue:  #1a6fff;   /* Brand Blue — gradient partner */
+  --white: #e2eaf8;   /* Slightly warm white — body text */
+  --muted: #4a6480;   /* Muted blue-grey — secondary text */
+  --dim:   rgba(226,234,248,.35); /* Dimmed text */
+  --border:rgba(0,212,255,.1);    /* Cyan-tinted border */
+  --border2:rgba(0,212,255,.06);  /* Subtle border */
+
+  --fc:'Barlow Condensed',sans-serif;
+  --fe:'Barlow',sans-serif;
+  --fa:'IBM Plex Sans Arabic',sans-serif;
+}
+html{scroll-behavior:smooth;background:var(--navy)}
+body{
+  background:var(--navy);
+  color:var(--white);
+  font-family:var(--fe);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+body.ar{font-family:var(--fa);direction:rtl}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 52px;
+  background:rgba(2,8,18,.82);
+  backdrop-filter:blur(28px);
+  border-bottom:1px solid var(--border2);
+}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-mark{
+  width:34px;height:34px;border-radius:8px;
+  background:linear-gradient(135deg,var(--cyan),var(--blue));
+  display:grid;place-items:center;
+  font-family:var(--fc);font-weight:900;font-size:16px;color:var(--navy);
+  box-shadow:0 0 20px rgba(0,212,255,.3);
+}
+.nav-name{font-family:var(--fc);font-size:13px;font-weight:900;letter-spacing:.25em;color:var(--cyan)}
+.nav-right{display:flex;align-items:center;gap:12px}
+.lang-btn{
+  background:none;border:1px solid var(--border);
+  color:var(--cyan);padding:7px 18px;border-radius:6px;
+  font-size:11px;font-weight:700;letter-spacing:.12em;
+  cursor:pointer;font-family:var(--fe);transition:all .2s;
+}
+.lang-btn:hover{background:rgba(0,212,255,.08);border-color:var(--cyan)}
+.nav-cta{
+  background:var(--cyan);color:var(--navy);
+  padding:9px 22px;border-radius:7px;font-size:12px;font-weight:700;
+  border:none;cursor:pointer;letter-spacing:.04em;font-family:var(--fe);
+  transition:all .2s;box-shadow:0 0 24px rgba(0,212,255,.25);
+}
+.nav-cta:hover{opacity:.88;transform:translateY(-1px);box-shadow:0 0 36px rgba(0,212,255,.4)}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  padding:120px 52px 90px;text-align:center;
+}
+/* Radial glow */
+.hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -5%,rgba(0,212,255,.13) 0%,transparent 65%),
+    radial-gradient(ellipse 45% 45% at 10% 55%,rgba(26,111,255,.1) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 40% at 90% 35%,rgba(0,212,255,.08) 0%,transparent 60%);
+}
+/* Grid lines */
+.hero-grid{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(0,212,255,.032) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,212,255,.032) 1px,transparent 1px);
+  background-size:88px 88px;
+  mask-image:radial-gradient(ellipse 85% 75% at 50% 30%,black,transparent);
+}
+/* Big ghost text */
+.hero-bg-word{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:var(--fc);font-weight:900;font-style:italic;
+  font-size:clamp(200px,28vw,340px);line-height:1;letter-spacing:-.05em;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(0,212,255,.05);
+  white-space:nowrap;pointer-events:none;user-select:none;z-index:0;
+}
+.hero-content{position:relative;z-index:2}
+.hero-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.22);
+  padding:9px 22px;border-radius:40px;
+  font-size:10px;font-weight:700;letter-spacing:.18em;
+  color:rgba(0,212,255,.85);margin-bottom:48px;
+}
+.pill-dot{width:5px;height:5px;border-radius:50%;background:var(--cyan);animation:pd 2s ease-in-out infinite}
+@keyframes pd{0%,100%{box-shadow:0 0 0 0 rgba(0,212,255,.5)}50%{box-shadow:0 0 0 8px rgba(0,212,255,0)}}
+.hero-eyebrow{
+  font-family:var(--fc);font-size:12px;font-weight:700;
+  letter-spacing:.3em;color:var(--cyan);opacity:.65;margin-bottom:14px;
+}
+.hero-h1{
+  font-family:var(--fc);font-weight:900;font-style:italic;
+  font-size:clamp(70px,10vw,144px);line-height:.86;
+  letter-spacing:-.04em;color:var(--white);max-width:1100px;
+}
+body.ar .hero-h1{
+  font-family:var(--fa);font-style:normal;font-weight:700;
+  font-size:clamp(52px,7vw,96px);line-height:1.05;letter-spacing:-.01em;
+}
+/* Outline accent word */
+.hero-h1 .hl{
+  color:transparent;
+  -webkit-text-stroke:1.5px var(--cyan);
+}
+.hero-divider{
+  width:1px;height:52px;
+  background:linear-gradient(180deg,transparent,rgba(0,212,255,.3),transparent);
+  margin:40px auto;
+}
+.hero-sub{
+  font-size:clamp(14px,1.4vw,17px);line-height:1.8;
+  color:var(--dim);max-width:480px;margin:0 auto;
+}
+.hero-btns{display:flex;gap:12px;justify-content:center;margin-top:44px;flex-wrap:wrap}
+.btn-c{
+  background:linear-gradient(135deg,var(--cyan),var(--blue));
+  color:var(--navy);padding:16px 42px;border-radius:9px;
+  font-size:14px;font-weight:700;border:none;cursor:pointer;
+  letter-spacing:.04em;font-family:var(--fe);
+  box-shadow:0 6px 32px rgba(0,212,255,.3);transition:all .22s;
+}
+.btn-c:hover{transform:translateY(-2px);box-shadow:0 10px 48px rgba(0,212,255,.45)}
+.btn-o{
+  background:rgba(0,212,255,.05);color:var(--white);
+  padding:16px 38px;border-radius:9px;font-size:14px;font-weight:600;
+  border:1px solid var(--border);cursor:pointer;
+  letter-spacing:.03em;font-family:var(--fe);transition:all .22s;
+}
+.btn-o:hover{background:rgba(0,212,255,.1);border-color:rgba(0,212,255,.25)}
+.scroll-hint{
+  position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:var(--muted);font-size:9px;letter-spacing:.2em;
+}
+.scroll-track{width:1px;height:44px;background:rgba(0,212,255,.15);overflow:hidden;position:relative}
+.scroll-runner{position:absolute;top:-50%;left:0;right:0;height:50%;background:var(--cyan);opacity:.6;animation:sr 2s ease-in-out infinite}
+@keyframes sr{0%{top:-50%}100%{top:100%}}
+
+/* ── NUM BAND ── */
+.num-band{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border-top:1px solid var(--border2);
+  border-bottom:1px solid var(--border2);
+  background:rgba(0,212,255,.02);
+}
+.num-cell{padding:48px 32px;text-align:center;border-right:1px solid var(--border2)}
+.num-cell:last-child{border-right:none}
+.num-big{
+  font-family:var(--fc);font-weight:900;font-style:italic;
+  font-size:clamp(58px,8vw,100px);line-height:1;letter-spacing:-.04em;color:var(--white);
+}
+.num-big .unit{color:var(--cyan)}
+.num-lbl{font-size:10px;font-weight:700;letter-spacing:.2em;color:var(--muted);margin-top:12px}
+
+/* ── MARQUEE ── */
+.mq-wrap{
+  overflow:hidden;padding:20px 0;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  position:relative;
+}
+.mq-wrap::before,.mq-wrap::after{
+  content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none;
+}
+.mq-wrap::before{left:0;background:linear-gradient(90deg,var(--navy),transparent)}
+.mq-wrap::after{right:0;background:linear-gradient(-90deg,var(--navy),transparent)}
+.mq-inner{display:inline-flex;white-space:nowrap;animation:mq 28s linear infinite}
+.mq-wrap:hover .mq-inner{animation-play-state:paused}
+@keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.mq-tag{display:inline-flex;align-items:center;gap:8px;padding:0 30px;font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--muted)}
+.mq-tag .dot{color:var(--cyan);font-size:7px}
+
+/* ── SECTION SHELL ── */
+.sec{padding:100px 52px;max-width:1200px;margin:0 auto}
+.sec-lbl{font-size:10px;font-weight:700;letter-spacing:.22em;color:var(--cyan);margin-bottom:20px;opacity:.8}
+.sec-h{
+  font-family:var(--fc);font-weight:900;font-style:italic;
+  font-size:clamp(44px,5.5vw,78px);line-height:.87;letter-spacing:-.04em;color:var(--white);
+}
+body.ar .sec-h{font-family:var(--fa);font-style:normal;font-size:clamp(34px,4.5vw,58px);line-height:1.08;letter-spacing:-.01em}
+.sec-sub{font-size:15px;line-height:1.8;color:var(--dim);margin-top:20px;max-width:500px}
+
+/* ── COMMAND CARD ── */
+.cmd-card{
+  border:1px solid var(--border);border-radius:20px;overflow:hidden;
+  background:rgba(0,212,255,.03);max-width:880px;margin:56px auto 0;position:relative;
+}
+.cmd-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:.4;
+}
+.cmd-top{
+  padding:26px 32px 22px;border-bottom:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--navy2);
+}
+.cmd-name{font-family:var(--fc);font-size:22px;font-weight:900;letter-spacing:-.01em;color:var(--white)}
+.cmd-sub{font-size:11px;letter-spacing:.08em;color:var(--muted);margin-top:4px}
+.live-pill{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.22);
+  color:#34d399;padding:7px 16px;border-radius:30px;font-size:10px;font-weight:700;letter-spacing:.1em;
+}
+.live-dot{width:5px;height:5px;border-radius:50%;background:#34d399;animation:pd 1.5s infinite}
+.cmd-kpis{display:grid;grid-template-columns:repeat(3,1fr);background:var(--navy)}
+.kpi-cell{padding:24px 26px;border-right:1px solid var(--border2)}
+.kpi-cell:last-child{border-right:none}
+.kpi-v{font-family:var(--fc);font-size:40px;font-weight:900;color:var(--cyan);line-height:1;letter-spacing:-.02em}
+.kpi-l{font-size:10px;letter-spacing:.1em;color:var(--muted);margin-top:8px;font-weight:600}
+.cmd-bars{padding:22px 32px 28px;display:grid;grid-template-columns:1fr 1fr;gap:16px;background:var(--navy2)}
+.bh{display:flex;justify-content:space-between;margin-bottom:8px}
+.bh-name{font-size:12px;color:var(--muted)}
+.bh-pct{font-family:var(--fc);font-size:13px;font-weight:900;color:var(--cyan)}
+.bar-track{height:3px;background:rgba(0,212,255,.08);border-radius:10px;overflow:hidden}
+.bar-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--cyan),var(--blue))}
+
+/* ── FEAT GRID ── */
+.feat-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border2);
+  border:1px solid var(--border2);margin-top:60px;
+}
+.f-cell{
+  background:var(--navy);padding:34px 30px;
+  transition:background .25s;position:relative;overflow:hidden;cursor:default;
+}
+.f-cell::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  transform:scaleX(0);transform-origin:left;transition:transform .4s;
+}
+.f-cell:hover{background:var(--navy2)}
+.f-cell:hover::before{transform:scaleX(1)}
+.f-n{font-family:var(--fc);font-size:10px;font-weight:900;letter-spacing:.22em;color:rgba(0,212,255,.3);margin-bottom:22px}
+.f-title{font-size:16px;font-weight:700;color:var(--white);margin-bottom:10px}
+.f-desc{font-size:13px;line-height:1.65;color:var(--dim)}
+
+/* ── GYM ── */
+.gym-row{display:grid;grid-template-columns:1fr 1.25fr;gap:72px;align-items:start}
+.gym-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.g-tag{
+  background:rgba(0,212,255,.06);border:1px solid var(--border);
+  color:rgba(0,212,255,.7);padding:8px 16px;border-radius:5px;
+  font-size:11px;font-weight:600;letter-spacing:.08em;
+}
+.gym-cards{display:flex;flex-direction:column;gap:12px}
+.g-card{
+  border:1px solid rgba(255,255,255,.07);border-radius:12px;
+  padding:24px 26px;background:var(--navy2);transition:all .25s;cursor:default;
+}
+.g-card:hover{border-color:var(--border);background:var(--navy3)}
+.g-card h4{font-size:16px;font-weight:700;color:var(--white);margin-bottom:8px}
+.g-card p{font-size:13px;line-height:1.65;color:var(--dim)}
+
+/* ── AI ── */
+.ai-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:48px}
+.ai-card{
+  padding:26px;border-radius:12px;
+  border:1px solid rgba(255,255,255,.06);
+  background:var(--navy2);transition:all .3s;cursor:default;
+}
+.ai-card:hover{border-color:var(--border);background:var(--navy3);transform:translateY(-2px)}
+.ai-bar{width:24px;height:2px;background:linear-gradient(90deg,var(--cyan),var(--blue));margin-bottom:16px}
+.ai-card h3{font-size:15px;font-weight:700;color:var(--white);margin-bottom:8px}
+.ai-card p{font-size:12px;line-height:1.6;color:var(--dim)}
+
+
+/* ── PRODUCT SHOWCASE ── */
+.showcase-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:54px}
+.show-card{
+  min-height:260px;border:1px solid var(--border);border-radius:18px;
+  background:linear-gradient(180deg,rgba(0,212,255,.06),rgba(6,17,31,.9));
+  padding:22px;position:relative;overflow:hidden;transition:all .28s;cursor:default;
+}
+.show-card:hover{transform:translateY(-4px);border-color:rgba(0,212,255,.32);box-shadow:0 18px 60px rgba(0,0,0,.28)}
+.show-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(0,212,255,.13),transparent 56%);pointer-events:none}
+.show-mini{
+  position:relative;height:124px;border-radius:14px;border:1px solid rgba(0,212,255,.13);
+  background:rgba(2,8,18,.62);padding:14px;display:flex;flex-direction:column;gap:10px;margin-bottom:22px;
+}
+.show-line{height:7px;border-radius:10px;background:rgba(0,212,255,.13)}
+.show-line.a{width:70%;background:linear-gradient(90deg,var(--cyan),var(--blue))}
+.show-line.b{width:48%}.show-line.c{width:86%}.show-line.d{width:60%}
+.show-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:auto}
+.show-kpis span{height:28px;border-radius:8px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.08)}
+.show-card h3{position:relative;font-size:15px;font-weight:700;color:var(--white);margin-bottom:8px}
+.show-card p{position:relative;font-size:12px;line-height:1.65;color:var(--dim)}
+.demo-form{margin-top:44px;border:1px solid var(--border);border-radius:18px;background:rgba(2,8,18,.5);padding:18px;display:grid;grid-template-columns:repeat(4,1fr) auto;gap:10px}
+.demo-form input{background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.12);border-radius:10px;color:var(--white);padding:14px 14px;font-family:inherit;font-size:13px;outline:none}
+.demo-form input::placeholder{color:rgba(226,234,248,.32)}
+.demo-form input:focus{border-color:rgba(0,212,255,.4);box-shadow:0 0 0 3px rgba(0,212,255,.06)}
+.demo-form button{white-space:nowrap}
+@media(max-width:980px){.showcase-grid{grid-template-columns:1fr 1fr}.demo-form{grid-template-columns:1fr 1fr}.demo-form button{grid-column:1/-1}}
+@media(max-width:560px){.showcase-grid{grid-template-columns:1fr}.demo-form{grid-template-columns:1fr}}
+
+/* ── FLOW ── */
+.flow-row{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:42px}
+.f-step{
+  border:1px solid var(--border);color:var(--cyan);
+  padding:11px 22px;border-radius:30px;font-family:var(--fc);
+  font-size:13px;font-weight:900;letter-spacing:.12em;
+  transition:all .22s;cursor:default;
+  background:rgba(0,212,255,.04);
+}
+.f-step:hover{background:rgba(0,212,255,.12);border-color:var(--cyan)}
+.f-arr{color:var(--muted);font-size:18px;padding:0 2px}
+
+/* ── CTA ── */
+.cta-wrap{padding:0 52px 110px}
+.cta-box{
+  border:1px solid var(--border);border-radius:24px;
+  padding:84px 56px;text-align:center;position:relative;overflow:hidden;
+  background:linear-gradient(145deg,rgba(0,212,255,.09),rgba(26,111,255,.05),rgba(0,212,255,.03));
+}
+.cta-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:.5;
+}
+.cta-box::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(0,212,255,.08),transparent);
+  pointer-events:none;
+}
+.cta-bg-w{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:var(--fc);font-weight:900;font-style:italic;
+  font-size:clamp(100px,18vw,200px);color:transparent;
+  -webkit-text-stroke:1px rgba(0,212,255,.06);
+  white-space:nowrap;pointer-events:none;user-select:none;line-height:1;
+}
+.cta-box h2{
+  position:relative;font-family:var(--fc);font-weight:900;font-style:italic;
+  font-size:clamp(38px,5vw,64px);line-height:.9;letter-spacing:-.04em;
+  color:var(--white);max-width:700px;margin:0 auto;
+}
+body.ar .cta-box h2{font-family:var(--fa);font-style:normal;font-size:clamp(30px,4vw,48px);line-height:1.1;letter-spacing:-.01em}
+.cta-box p{position:relative;font-size:15px;color:var(--dim);margin-top:22px;line-height:1.8}
+.cta-box .btn-c{position:relative;margin-top:40px;display:inline-block}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid var(--border2);padding:30px 52px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--navy);
+}
+.foot-logo{display:flex;align-items:center;gap:8px;font-family:var(--fc);font-size:12px;font-weight:900;letter-spacing:.22em;color:var(--muted)}
+.foot-m{width:24px;height:24px;border-radius:5px;background:linear-gradient(135deg,var(--cyan),var(--blue));display:grid;place-items:center;font-family:var(--fc);font-weight:900;font-size:11px;color:var(--navy)}
+.foot-copy{font-size:10px;color:var(--muted);letter-spacing:.08em}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:860px){
+  nav{padding:18px 20px}
+  .nav-name{display:none}
+  .hero{padding:100px 20px 80px}
+  .num-band{grid-template-columns:1fr}
+  .num-cell{border-right:none;border-bottom:1px solid var(--border2);padding:32px}
+  .sec{padding:72px 20px}
+  .feat-grid{grid-template-columns:1fr}
+  .gym-row{grid-template-columns:1fr;gap:44px}
+  .ai-grid{grid-template-columns:1fr 1fr}
+  .cmd-bars{grid-template-columns:1fr}
+  .cmd-kpis{grid-template-columns:1fr}
+  .cta-wrap{padding:0 20px 80px}
+  .cta-box{padding:52px 28px}
+  footer{flex-direction:column;gap:12px;text-align:center}
+}
+@media(max-width:560px){
+  .ai-grid{grid-template-columns:1fr}
+  .hero-btns{flex-direction:column;align-items:center}
+  .btn-c,.btn-o{width:100%;max-width:300px;text-align:center}
+}
+</style>
+</head>
+<body id="body">
+
+<nav>
+  <div class="nav-logo">
+    <div class="nav-mark">F</div>
+    <span class="nav-name">FITNEX AI</span>
+  </div>
+  <div class="nav-right">
+    <button class="lang-btn" onclick="toggleLang()" id="lang-btn">AR</button>
+    <button class="nav-cta" id="nav-cta" onclick="document.getElementById('cta-sec').scrollIntoView({behavior:'smooth'})">Request Access</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-bg-word" id="bg-word">GYM</div>
+  <div class="hero-content">
+    <div class="hero-pill"><span class="pill-dot"></span><span id="pill-txt">COMING SOON · PRIVATE ACCESS</span></div>
+    <div class="hero-eyebrow" id="hero-eyebrow">FITNESS INTELLIGENCE PLATFORM</div>
+    <h1 class="hero-h1" id="hero-h1">The Operating System<br><span class="hl">for</span><br>Modern Gyms.</h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub" id="hero-sub">Manage trainers, clients, sessions, assessments, reports, and revenue from one intelligent platform built for ambitious fitness businesses.</p>
+    <div class="hero-btns">
+      <button class="btn-c" id="btn-p" onclick="document.getElementById('cta-sec').scrollIntoView({behavior:'smooth'})">Book a Live Demo</button>
+      <button class="btn-o" id="btn-s" onclick="document.getElementById('platform').scrollIntoView({behavior:'smooth'})">Explore the Platform</button>
+    </div>
+  </div>
+  <div class="scroll-hint"><span id="scroll-txt">SCROLL</span><div class="scroll-track"><div class="scroll-runner"></div></div></div>
+</section>
+
+<div class="num-band reveal">
+  <div class="num-cell"><div class="num-big"><span class="unit">$</span><span id="n1">4,070</span></div><div class="num-lbl" id="nl1">REVENUE PERFORMANCE</div></div>
+  <div class="num-cell"><div class="num-big" id="n2">22</div><div class="num-lbl" id="nl2">COMPLETED SESSIONS</div></div>
+  <div class="num-cell"><div class="num-big"><span id="n3">91</span><span class="unit">%</span></div><div class="num-lbl" id="nl3">TRAINER EFFICIENCY</div></div>
+</div>
+
+<div class="mq-wrap"><div class="mq-inner" id="mq"></div></div>
+
+<section id="platform">
+  <div class="sec reveal">
+    <div class="sec-lbl" id="s1l">GYM COMMAND CENTER</div>
+    <h2 class="sec-h" id="s1h">Everything You Need to Grow Your Gym.</h2>
+    <p class="sec-sub" id="s1s">Monitor performance, manage operations, track revenue, and make smarter business decisions from one executive dashboard.</p>
+    <div class="cmd-card">
+      <div class="cmd-top">
+        <div><div class="cmd-name" id="cmd-name">Gym Command Center</div><div class="cmd-sub" id="cmd-sub">Real-Time Business Intelligence</div></div>
+        <div class="live-pill"><span class="live-dot"></span>LIVE</div>
+      </div>
+      <div class="cmd-kpis">
+        <div class="kpi-cell"><div class="kpi-v" id="k1">$4,070</div><div class="kpi-l" id="kl1">Revenue performance</div></div>
+        <div class="kpi-cell"><div class="kpi-v" id="k2">22</div><div class="kpi-l" id="kl2">Sessions completed</div></div>
+        <div class="kpi-cell"><div class="kpi-v" id="k3">91%</div><div class="kpi-l" id="kl3">Trainer efficiency</div></div>
+      </div>
+      <div class="cmd-bars">
+        <div><div class="bh"><span class="bh-name" id="b1">Schedule</span><span class="bh-pct">91%</span></div><div class="bar-track"><div class="bar-fill" style="width:91%"></div></div></div>
+        <div><div class="bh"><span class="bh-name" id="b2">Train</span><span class="bh-pct">78%</span></div><div class="bar-track"><div class="bar-fill" style="width:78%"></div></div></div>
+        <div><div class="bh"><span class="bh-name" id="b3">Complete</span><span class="bh-pct">64%</span></div><div class="bar-track"><div class="bar-fill" style="width:64%"></div></div></div>
+        <div><div class="bh"><span class="bh-name" id="b4">Analyze</span><span class="bh-pct">52%</span></div><div class="bar-track"><div class="bar-fill" style="width:52%"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec reveal">
+    <div class="sec-lbl" id="s2l">THE PLATFORM</div>
+    <h2 class="sec-h" id="s2h">One Platform. Total Control.</h2>
+    <div class="feat-grid" id="feat-grid"></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec">
+    <div class="gym-row reveal">
+      <div>
+        <div class="sec-lbl" id="s3l">GYM MANAGEMENT</div>
+        <h2 class="sec-h" id="s3h">Designed for Modern Fitness Businesses.</h2>
+        <p class="sec-sub" id="s3s">From trainer performance to package revenue, every key metric is available in real time.</p>
+        <div class="gym-tags" id="gym-tags"></div>
+      </div>
+      <div class="gym-cards" id="gym-cards"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec reveal">
+    <div class="sec-lbl" id="s4l">AI FITNESS INTELLIGENCE</div>
+    <h2 class="sec-h" id="s4h">AI That Works Alongside Your Coaches.</h2>
+    <div class="ai-grid" id="ai-grid"></div>
+  </div>
+</section>
+
+
+<section id="showcase">
+  <div class="sec reveal">
+    <div class="sec-lbl" id="show-l">FITNEX AI IN ACTION</div>
+    <h2 class="sec-h" id="show-h">See the system your gym will run on.</h2>
+    <p class="sec-sub" id="show-s">A premium command experience for owners, managers, trainers, and client progress.</p>
+    <div class="showcase-grid" id="show-grid"></div>
+    <div class="demo-form">
+      <input id="demo-name" placeholder="Name" />
+      <input id="demo-gym" placeholder="Gym Name" />
+      <input id="demo-phone" placeholder="Phone / WhatsApp" />
+      <input id="demo-email" placeholder="Email" />
+      <button class="btn-c" id="demo-btn" type="button">Book Demo</button>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec reveal" style="text-align:center">
+    <div class="sec-lbl" style="text-align:center" id="s5l">THE FITNEX AI WORKFLOW</div>
+    <div class="flow-row" id="flow-row"></div>
+  </div>
+</section>
+
+<div class="cta-wrap reveal" id="cta-sec">
+  <div class="cta-box">
+    <div class="cta-bg-w" id="cta-bg-w">LAUNCH</div>
+    <h2 id="cta-h">Ready to Transform Your Gym?</h2>
+    <p id="cta-p">Join the next generation of fitness businesses using technology, intelligence, and data to deliver better results.</p>
+    <button class="btn-c" id="cta-btn">Book a Live Demo</button>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-logo"><div class="foot-m">F</div>FITNEX AI</div>
+  <div class="foot-copy" id="foot-copy">© 2026 FITNEX AI · ALL RIGHTS RESERVED</div>
+</footer>
+
+<script>
+const T={
+  en:{
+    lang:'AR',pill:'COMING SOON · PRIVATE ACCESS',eyebrow:'FITNESS INTELLIGENCE PLATFORM',
+    h1:'The Operating System<br><span class="hl">for</span><br>Modern Gyms.',
+    bgWord:'GYM',ctaBgW:'LAUNCH',scrollTxt:'SCROLL',
+    sub:'Manage trainers, clients, sessions, assessments, reports, and revenue from one intelligent platform built for ambitious fitness businesses.',
+    btnP:'Book a Live Demo',btnS:'Explore the Platform',navCta:'Request Access',
+    n1:'4,070',n2:'22',n3:'91',nl1:'REVENUE PERFORMANCE',nl2:'COMPLETED SESSIONS',nl3:'TRAINER EFFICIENCY',
+    mq:['Business Visibility','Trainer Workspace','Smart Scheduling','Revenue Insights','AI Posture Analysis','Built to Scale','Performance Reports','Package Logic'],
+    s1l:'GYM COMMAND CENTER',s1h:'Everything You Need to Grow Your Gym.',s1s:'Monitor performance, manage operations, track revenue, and make smarter business decisions from one executive dashboard.',
+    cmdName:'Gym Command Center',cmdSub:'Real-Time Business Intelligence',
+    k1:'$4,070',k2:'22',k3:'91%',kl1:'Revenue performance',kl2:'Sessions completed',kl3:'Trainer efficiency',
+    bars:['Schedule','Train','Complete','Analyze'],
+    s2l:'THE PLATFORM',s2h:'One Platform. Total Control.',
+    feats:[
+      {n:'01',t:'Business Visibility',d:'Get a complete view of revenue, trainer performance, attendance, packages, and business growth in one place.'},
+      {n:'02',t:'Trainer Workspace',d:'Give every trainer the tools to manage clients, programs, sessions, and progress efficiently.'},
+      {n:'03',t:'Smart Scheduling',d:'Organize sessions, manage calendars, reduce conflicts, and keep daily operations running smoothly.'},
+      {n:'04',t:'Revenue Insights',d:'Understand where revenue comes from, identify trends, and track business performance with confidence.'},
+      {n:'05',t:'Built to Scale',d:'Whether you manage one facility or multiple locations, FITNEX AI grows with your business.'},
+      {n:'06',t:'Secure Cloud Platform',d:'Your business data is protected, synchronized, and accessible whenever you need it.'},
+    ],
+    s3l:'GYM MANAGEMENT',s3h:'Designed for Modern Fitness Businesses.',s3s:'From trainer performance to package revenue, every key metric is available in real time.',
+    gymTags:['Trainer KPIs','Revenue Tracking','Package History','Attendance','Session Analytics'],
+    gymCards:[
+      {t:'Trainer Performance',d:'Track productivity, attendance, session completion, and coaching activity across your team.'},
+      {t:'Revenue Management',d:'Monitor revenue, package sales, renewals, and business performance from one dashboard.'},
+      {t:'Client Lifecycle',d:'Manage client journeys, package history, assessments, and long-term progress with ease.'},
+    ],
+    s4l:'AI FITNESS INTELLIGENCE',s4h:'AI That Works Alongside Your Coaches.',
+    aiCards:[
+      {t:'AI Posture Analysis',d:'Advanced posture assessments with intelligent recommendations and progress tracking.'},
+      {t:'Fitness Assessment',d:'Evaluate fitness levels, body composition, and client readiness with structured assessments.'},
+      {t:'Strength Insights',d:'Monitor performance trends and identify opportunities for smarter progression.'},
+      {t:'Smart Reports',d:'Generate professional client reports automatically with clear insights and recommendations.'},
+      {t:'Business Intelligence',d:'Turn operational data into meaningful insights that support better decisions.'},
+      {t:'Trainer Guidance',d:'Provide trainers with intelligent guidance based on client performance and assessment history.'},
+    ],
+    showL:'FITNEX AI IN ACTION',showH:'See the system your gym will run on.',showS:'A premium command experience for owners, managers, trainers, and client progress.',
+    showCards:[
+      {t:'Gym Owner Dashboard',d:'Control revenue, trainers, sessions, and business performance from one executive view.'},
+      {t:'Trainer Workspace',d:'Give coaches a focused place to manage clients, programs, assessments, and progress.'},
+      {t:'AI Posture Analysis',d:'Turn client assessments into clear insights and professional recommendations.'},
+      {t:'Client Progress Reports',d:'Deliver premium reports that show progress, accountability, and value.'},
+    ],
+    demoName:'Name',demoGym:'Gym Name',demoPhone:'Phone / WhatsApp',demoEmail:'Email',demoBtn:'Book Demo',
+    s5l:'THE FITNEX AI WORKFLOW',
+    flow:['Schedule','Train','Assess','Analyze','Report','Grow'],
+    ctaH:'Ready to Transform Your Gym?',
+    ctaP:'Join the next generation of fitness businesses using technology, intelligence, and data to deliver better results.',
+    ctaBtn:'Book a Live Demo',
+    footCopy:'© 2026 FITNEX AI · ALL RIGHTS RESERVED'
+  },
+  ar:{
+    lang:'EN',pill:'قريباً · وصول خاص',eyebrow:'منصة ذكاء اللياقة البدنية',
+    h1:'نظام التشغيل الذكي<br><span class="hl">لإدارة</span><br>النوادي الحديثة.',
+    bgWord:'نادي',ctaBgW:'إطلاق',scrollTxt:'للأسفل',
+    sub:'أدر المدربين، العملاء، الحصص، التقييمات، التقارير، والإيرادات من منصة ذكية واحدة مصممة لأعمال اللياقة الطموحة.',
+    btnP:'احجز عرضًا مباشرًا',btnS:'استكشف المنصة',navCta:'طلب وصول',
+    n1:'4,070',n2:'22',n3:'91',nl1:'أداء الإيرادات',nl2:'الحصص المكتملة',nl3:'كفاءة المدربين',
+    mq:['وضوح الأعمال','مساحة عمل المدرب','جدولة ذكية','رؤى الإيرادات','تحليل القوام بالذكاء الاصطناعي','تعدد النوادي','تقارير الأداء','منطق البكجات'],
+    s1l:'مركز قيادة النادي',s1h:'كل ما تحتاجه لتنمية ناديك.',s1s:'راقب الأداء، أدر العمليات، تتبع الإيرادات، واتخذ قرارات أفضل من داشبورد إداري واحد.',
+    cmdName:'مركز قيادة النادي',cmdSub:'ذكاء أعمال مباشر',
+    k1:'$4,070',k2:'22',k3:'91%',kl1:'أداء الإيرادات',kl2:'الحصص المكتملة',kl3:'كفاءة المدربين',
+    bars:['جدولة','تدريب','إنجاز','تحليل'],
+    s2l:'المنصة',s2h:'منصة واحدة. تحكم كامل.',
+    feats:[
+      {n:'01',t:'وضوح الأعمال',d:'رؤية كاملة للإيرادات، أداء المدربين، الحضور، البكجات، ونمو العمل في مكان واحد.'},
+      {n:'02',t:'مساحة عمل المدرب',d:'امنح كل مدرب الأدوات اللازمة لإدارة العملاء، البرامج، الحصص، والتقدم بكفاءة.'},
+      {n:'03',t:'جدولة ذكية',d:'نظم الحصص، أدر التقويم، قلل التعارضات، وحافظ على سير العمليات بسلاسة.'},
+      {n:'04',t:'رؤى الإيرادات',d:'افهم مصادر الإيرادات، اكتشف الاتجاهات، وتتبع أداء العمل بثقة.'},
+      {n:'05',t:'مصمم للنمو',d:'سواء كنت تدير فرعًا واحدًا أو عدة مواقع، FITNEX AI ينمو مع عملك.'},
+      {n:'06',t:'منصة سحابية آمنة',d:'بيانات عملك محمية، متزامنة، ومتاحة عندما تحتاجها.'},
+    ],
+    s3l:'إدارة النوادي',s3h:'مصمم لأعمال اللياقة الحديثة.',s3s:'من أداء المدربين إلى إيرادات البكجات، كل مؤشر مهم متاح بشكل مباشر.',
+    gymTags:['مؤشرات المدربين','تتبع الإيرادات','سجل البكجات','الحضور','تحليل الحصص'],
+    gymCards:[
+      {t:'أداء المدربين',d:'تتبع الإنتاجية، الحضور، اكتمال الحصص، ونشاط التدريب عبر فريقك.'},
+      {t:'إدارة الإيرادات',d:'راقب الإيرادات، مبيعات البكجات، التجديدات، وأداء العمل من داشبورد واحد.'},
+      {t:'رحلة العميل',d:'أدر رحلة العميل، سجل البكجات، التقييمات، والتقدم طويل المدى بسهولة.'},
+    ],
+    s4l:'ذكاء اصطناعي للياقة',s4h:'ذكاء اصطناعي يعمل بجانب مدربيك.',
+    aiCards:[
+      {t:'تحليل القوام بالذكاء الاصطناعي',d:'تقييمات قوام متقدمة مع توصيات ذكية وتتبع للتقدم.'},
+      {t:'تقييم اللياقة',d:'قيّم مستوى اللياقة، تركيب الجسم، وجاهزية العميل من خلال تقييمات منظمة.'},
+      {t:'تحليل القوة',d:'راقب اتجاهات الأداء واكتشف فرص التقدم الذكي.'},
+      {t:'تقارير ذكية',d:'أنشئ تقارير احترافية للعملاء تلقائيًا مع رؤى وتوصيات واضحة.'},
+      {t:'ذكاء الأعمال',d:'حوّل بيانات التشغيل إلى رؤى تساعدك على اتخاذ قرارات أفضل.'},
+      {t:'توجيه المدرب',d:'زوّد المدربين بتوجيه ذكي مبني على أداء العميل وتاريخ تقييماته.'},
+    ],
+    showL:'FITNEX AI على أرض الواقع',showH:'شاهد النظام الذي سيُدار عليه ناديك.',showS:'تجربة قيادة فاخرة لأصحاب النوادي، المدراء، المدربين، وتقدم العملاء.',
+    showCards:[
+      {t:'داشبورد مالك النادي',d:'تحكم بالإيرادات، المدربين، الحصص، وأداء العمل من رؤية تنفيذية واحدة.'},
+      {t:'مساحة عمل المدرب',d:'امنح المدربين مكانًا واضحًا لإدارة العملاء، البرامج، التقييمات، والتقدم.'},
+      {t:'تحليل القوام بالذكاء الاصطناعي',d:'حوّل تقييمات العملاء إلى رؤى واضحة وتوصيات احترافية.'},
+      {t:'تقارير تقدم العملاء',d:'قدّم تقارير فاخرة تُظهر التقدم، الالتزام، والقيمة.'},
+    ],
+    demoName:'الاسم',demoGym:'اسم النادي',demoPhone:'الهاتف / واتساب',demoEmail:'البريد الإلكتروني',demoBtn:'احجز ديمو',
+    s5l:'مسار عمل FITNEX AI',
+    flow:['جدولة','تدريب','تقييم','تحليل','تقرير','نمو'],
+    ctaH:'جاهز لتحويل ناديك؟',
+    ctaP:'انضم إلى الجيل القادم من أعمال اللياقة التي تستخدم التكنولوجيا والذكاء والبيانات لتقديم نتائج أفضل.',
+    ctaBtn:'احجز عرضًا مباشرًا',
+    footCopy:'© 2026 FITNEX AI · جميع الحقوق محفوظة'
+  }
+};
+
+let lang='en';
+function toggleLang(){lang=lang==='en'?'ar':'en';apply()}
+function s(id,v){const e=document.getElementById(id);if(e)e.textContent=v}
+function sh(id,v){const e=document.getElementById(id);if(e)e.innerHTML=v}
+
+function apply(){
+  const d=T[lang];
+  document.body.className=lang==='ar'?'ar':'';
+  document.documentElement.lang=lang;
+  s('lang-btn',d.lang);
+  s('pill-txt',d.pill);
+  s('hero-eyebrow',d.eyebrow);
+  sh('hero-h1',d.h1);
+  s('bg-word',d.bgWord);
+  s('cta-bg-w',d.ctaBgW);
+  s('scroll-txt',d.scrollTxt);
+  s('hero-sub',d.sub);
+  s('btn-p',d.btnP);s('btn-s',d.btnS);s('nav-cta',d.navCta);
+  s('n1',d.n1);s('n2',d.n2);s('n3',d.n3);
+  s('nl1',d.nl1);s('nl2',d.nl2);s('nl3',d.nl3);
+  s('s1l',d.s1l);sh('s1h',d.s1h);s('s1s',d.s1s);
+  s('cmd-name',d.cmdName);s('cmd-sub',d.cmdSub);
+  s('k1',d.k1);s('k2',d.k2);s('k3',d.k3);
+  s('kl1',d.kl1);s('kl2',d.kl2);s('kl3',d.kl3);
+  ['b1','b2','b3','b4'].forEach((id,i)=>s(id,d.bars[i]));
+  s('s2l',d.s2l);sh('s2h',d.s2h);
+  document.getElementById('feat-grid').innerHTML=d.feats.map(f=>`<div class="f-cell"><div class="f-n">${f.n}</div><div class="f-title">${f.t}</div><div class="f-desc">${f.d}</div></div>`).join('');
+  s('s3l',d.s3l);sh('s3h',d.s3h);s('s3s',d.s3s);
+  document.getElementById('gym-tags').innerHTML=d.gymTags.map(t=>`<span class="g-tag">${t}</span>`).join('');
+  document.getElementById('gym-cards').innerHTML=d.gymCards.map(c=>`<div class="g-card"><h4>${c.t}</h4><p>${c.d}</p></div>`).join('');
+  s('s4l',d.s4l);sh('s4h',d.s4h);
+  document.getElementById('ai-grid').innerHTML=d.aiCards.map(c=>`<div class="ai-card"><div class="ai-bar"></div><h3>${c.t}</h3><p>${c.d}</p></div>`).join('');
+  s('show-l',d.showL);sh('show-h',d.showH);s('show-s',d.showS);
+  document.getElementById('show-grid').innerHTML=d.showCards.map(c=>`<div class="show-card"><div class="show-mini"><div class="show-line a"></div><div class="show-line b"></div><div class="show-line c"></div><div class="show-kpis"><span></span><span></span><span></span></div></div><h3>${c.t}</h3><p>${c.d}</p></div>`).join('');
+  const ph={ 'demo-name':d.demoName,'demo-gym':d.demoGym,'demo-phone':d.demoPhone,'demo-email':d.demoEmail};
+  Object.keys(ph).forEach(id=>{const el=document.getElementById(id);if(el)el.placeholder=ph[id]});
+  s('demo-btn',d.demoBtn);
+  s('s5l',d.s5l);
+  document.getElementById('flow-row').innerHTML=d.flow.map((step,i)=>`<span class="f-step">${step}</span>${i<d.flow.length-1?'<span class="f-arr">→</span>':''}`).join('');
+  sh('cta-h',d.ctaH);s('cta-p',d.ctaP);s('cta-btn',d.ctaBtn);
+  s('foot-copy',d.footCopy);
+  buildMq(d.mq);
+}
+
+function buildMq(items){
+  const double=[...items,...items];
+  document.getElementById('mq').innerHTML=double.map(m=>`<span class="mq-tag"><span class="dot">✦</span>${m}</span>`).join('');
+}
+
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      if(e.target.classList.contains('num-band'))animateNums();
+    }
+  });
+},{threshold:.1});
+
+function animateNums(){
+  [{id:'n1',v:4070},{id:'n2',v:22},{id:'n3',v:91}].forEach(({id,v})=>{
+    const el=document.getElementById(id);if(!el)return;
+    let start=null;
+    (function step(ts){
+      if(!start)start=ts;
+      const p=Math.min((ts-start)/1600,1);
+      const ease=1-Math.pow(1-p,3);
+      const val=Math.round(ease*v);
+      el.textContent=val>=1000?val.toLocaleString():val;
+      if(p<1)requestAnimationFrame(step);
+    })(performance.now());
+  });
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  apply();
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  const demo=document.getElementById('demo-btn');
+  if(demo){demo.addEventListener('click',()=>{
+    const name=document.getElementById('demo-name').value||'';
+    const gym=document.getElementById('demo-gym').value||'';
+    const phone=document.getElementById('demo-phone').value||'';
+    const email=document.getElementById('demo-email').value||'';
+    const body=encodeURIComponent(`Name: ${name}\nGym: ${gym}\nPhone/WhatsApp: ${phone}\nEmail: ${email}\n\nI would like to book a live demo for FITNEX AI.`);
+    window.location.href=`mailto:hello@fitnexai.com?subject=FITNEX AI Demo Request&body=${body}`;
+  })}
+});
+</script>
+</body>
+</html>
