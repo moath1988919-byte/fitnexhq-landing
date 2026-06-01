@@ -473,6 +473,18 @@ footer{
 }
 .foot-logo{display:flex;align-items:center;gap:8px;font-family:var(--fc);font-size:12px;font-weight:900;letter-spacing:.22em;color:var(--muted)}
 .foot-m{width:24px;height:24px;border-radius:5px;background:linear-gradient(135deg,var(--cyan),var(--blue));display:grid;place-items:center;font-family:var(--fc);font-weight:900;font-size:11px;color:var(--navy)}
+.foot-social{
+  display:inline-flex;align-items:center;gap:9px;color:rgba(226,234,248,.5);
+  text-decoration:none;font-size:11px;font-weight:700;letter-spacing:.08em;
+  transition:color .22s ease,transform .22s ease;
+}
+.foot-social:hover{color:var(--cyan);transform:translateY(-1px)}
+.linkedin-mark{
+  width:24px;height:24px;border-radius:6px;display:grid;place-items:center;
+  border:1px solid rgba(0,212,255,.18);background:rgba(0,212,255,.07);
+  color:var(--cyan);font-family:var(--fe);font-size:12px;font-weight:700;letter-spacing:0;
+  box-shadow:0 0 18px rgba(0,212,255,.1);
+}
 .foot-copy{font-size:10px;color:var(--muted);letter-spacing:.08em}
 
 /* ── REVEAL ── */
@@ -650,6 +662,10 @@ footer{
 
 <footer>
   <div class="foot-logo"><div class="foot-m">F</div>FITNEX AI</div>
+  <a class="foot-social" href="https://www.linkedin.com/company/fitnex-ai/" target="_blank" rel="noopener noreferrer" aria-label="Follow FITNEX AI on LinkedIn">
+    <span class="linkedin-mark" aria-hidden="true">in</span>
+    <span id="linkedin-link">Follow us on LinkedIn</span>
+  </a>
   <div class="foot-copy" id="foot-copy">© 2026 FITNEX AI · ALL RIGHTS RESERVED</div>
 </footer>
 
@@ -729,6 +745,7 @@ const T={
     ctaH:'Ready to Transform Your Gym?',
     ctaP:'Join the next generation of fitness businesses using technology, intelligence, and data to deliver better results.',
     ctaBtn:'Book a Live Demo',
+    linkedin:'Follow us on LinkedIn',
     footCopy:'© 2026 FITNEX AI · ALL RIGHTS RESERVED'
   },
   ar:{
@@ -790,6 +807,7 @@ const T={
     ctaH:'جاهز لتحويل ناديك؟',
     ctaP:'انضم إلى الجيل القادم من أعمال اللياقة التي تستخدم التكنولوجيا والذكاء والبيانات لتقديم نتائج أفضل.',
     ctaBtn:'احجز عرضًا مباشرًا',
+    linkedin:'تابعنا على LinkedIn',
     footCopy:'© 2026 FITNEX AI · جميع الحقوق محفوظة'
   }
 };
@@ -844,6 +862,7 @@ function apply(){
   s('s5l',d.s5l);
   document.getElementById('flow-row').innerHTML=d.flow.map((step,i)=>`<span class="f-step">${step}</span>${i<d.flow.length-1?'<span class="f-arr">→</span>':''}`).join('');
   sh('cta-h',d.ctaH);s('cta-p',d.ctaP);s('cta-btn',d.ctaBtn);
+  s('linkedin-link',d.linkedin);
   s('foot-copy',d.footCopy);
   buildMq(d.mq);
 }
