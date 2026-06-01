@@ -373,6 +373,34 @@ body.ar .sec-h{font-family:var(--fa);font-style:normal;font-size:clamp(34px,4.5v
 .show-card:nth-child(3):hover .show-frame{border-color:rgba(0,212,255,.54);box-shadow:0 0 48px rgba(0,212,255,.28),0 24px 62px rgba(0,0,0,.36)}
 .show-card h3{position:relative;font-size:15px;font-weight:700;color:var(--white);margin-bottom:8px}
 .show-card p{position:relative;font-size:12px;line-height:1.65;color:var(--dim)}
+.benefits-block{margin-top:72px}
+.benefits-head{display:flex;align-items:end;justify-content:space-between;gap:28px}
+.benefits-head .sec-sub{margin-top:0}
+.benefits-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:32px}
+.benefit-card{
+  position:relative;overflow:hidden;min-height:132px;padding:22px 18px;border-radius:16px;
+  border:1px solid rgba(0,212,255,.12);
+  background:linear-gradient(180deg,rgba(0,212,255,.055),rgba(6,17,31,.76));
+  box-shadow:0 18px 48px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.045);
+  transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease;
+}
+.benefit-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 20% 0%,rgba(0,212,255,.13),transparent 58%);
+  pointer-events:none;
+}
+.benefit-card:hover{transform:translateY(-3px);border-color:rgba(0,212,255,.28);box-shadow:0 24px 62px rgba(0,0,0,.28),0 0 30px rgba(0,212,255,.1)}
+.benefit-mark{
+  position:relative;width:26px;height:26px;border-radius:8px;margin-bottom:22px;
+  border:1px solid rgba(0,212,255,.26);background:rgba(0,212,255,.08);
+  box-shadow:0 0 22px rgba(0,212,255,.12);
+}
+.benefit-mark::after{
+  content:'';position:absolute;left:8px;top:8px;width:8px;height:8px;border-radius:50%;
+  background:linear-gradient(135deg,var(--cyan),var(--blue));
+  box-shadow:0 0 14px rgba(0,212,255,.48);
+}
+.benefit-card h3{position:relative;font-size:13px;font-weight:700;line-height:1.35;color:var(--white)}
 .demo-form{margin-top:44px;border:1px solid var(--border);border-radius:18px;background:rgba(2,8,18,.5);padding:18px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) max-content;gap:10px;width:100%;max-width:100%}
 .demo-form input{background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.12);border-radius:10px;color:var(--white);padding:14px 14px;font-family:inherit;font-size:13px;outline:none;width:100%;min-width:0}
 .demo-form input::placeholder{color:rgba(226,234,248,.32)}
@@ -381,8 +409,8 @@ body.ar .sec-h{font-family:var(--fa);font-style:normal;font-size:clamp(34px,4.5v
 .demo-status{grid-column:1/-1;font-size:12px;line-height:1.6;color:var(--dim);min-height:20px}
 .demo-status.ok{color:var(--cyan)}
 .demo-status.err{color:#fca5a5}
-@media(max-width:980px){.showcase-grid{grid-template-columns:1fr 1fr}.demo-form{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.demo-form button{grid-column:1/-1;width:100%;justify-self:stretch}}
-@media(max-width:560px){.showcase-grid{grid-template-columns:1fr}.demo-form{grid-template-columns:1fr}}
+@media(max-width:980px){.showcase-grid{grid-template-columns:1fr 1fr}.benefits-head{display:block}.benefits-head .sec-sub{margin-top:18px}.benefits-grid{grid-template-columns:repeat(2,1fr)}.demo-form{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.demo-form button{grid-column:1/-1;width:100%;justify-self:stretch}}
+@media(max-width:560px){.showcase-grid{grid-template-columns:1fr}.benefits-block{margin-top:58px}.benefits-grid{grid-template-columns:1fr}.demo-form{grid-template-columns:1fr}}
 
 /* ── FLOW ── */
 .flow-row{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:42px}
@@ -576,6 +604,13 @@ footer{
     <h2 class="sec-h" id="show-h">See the system your gym will run on.</h2>
     <p class="sec-sub" id="show-s">A premium command experience for owners, managers, trainers, and client progress.</p>
     <div class="showcase-grid" id="show-grid"></div>
+    <div class="benefits-block">
+      <div class="benefits-head">
+        <h2 class="sec-h" id="benefits-h">Built to improve gym performance</h2>
+        <p class="sec-sub" id="benefits-s">FITNEX AI helps owners and managers see what is happening across trainers, clients, sessions, and revenue — from one premium dashboard.</p>
+      </div>
+      <div class="benefits-grid" id="benefits-grid"></div>
+    </div>
     <form class="demo-form" id="demo-form" action="https://formspree.io/f/xredvnkg" method="POST" novalidate>
       <input type="hidden" name="_subject" value="FITNEX AI Lead Request" />
       <input id="demo-name" name="Full Name" autocomplete="name" placeholder="Full Name" required />
@@ -671,6 +706,9 @@ const T={
       {t:'AI Posture Analysis',d:'Turn client assessments into clear insights and professional recommendations.'},
       {t:'Client Progress Reports',d:'Deliver premium reports that show progress, accountability, and value.'},
     ],
+    benefitsH:'Built to improve gym performance',
+    benefitsS:'FITNEX AI helps owners and managers see what is happening across trainers, clients, sessions, and revenue — from one premium dashboard.',
+    benefits:['Increase Trainer Accountability','Track Client Progress','Monitor Revenue','Centralize Operations','Save Administrative Time'],
     demoName:'Full Name',demoGym:'Gym Name',demoEmail:'Email',demoPhone:'Phone Number',demoBtn:'Book a Live Demo',
     demoRequired:'Please complete all fields before submitting.',
     demoInvalid:'Please enter a valid email address.',
@@ -729,6 +767,9 @@ const T={
       {t:'تحليل القوام بالذكاء الاصطناعي',d:'حوّل تقييمات العملاء إلى رؤى واضحة وتوصيات احترافية.'},
       {t:'تقارير تقدم العملاء',d:'قدّم تقارير فاخرة تُظهر التقدم، الالتزام، والقيمة.'},
     ],
+    benefitsH:'مصمم لتحسين أداء النادي',
+    benefitsS:'يساعد FITNEX AI أصحاب النوادي والمدراء على متابعة المدربين والعملاء والحصص والإيرادات من لوحة تحكم واحدة احترافية.',
+    benefits:['رفع التزام المدربين','متابعة تطور العملاء','مراقبة الإيرادات','توحيد العمليات','توفير الوقت الإداري'],
     demoName:'الاسم الكامل',demoGym:'اسم النادي',demoEmail:'البريد الإلكتروني',demoPhone:'رقم الهاتف',demoBtn:'احجز عرضًا مباشرًا',
     demoRequired:'يرجى إكمال جميع الحقول قبل الإرسال.',
     demoInvalid:'يرجى إدخال بريد إلكتروني صحيح.',
@@ -785,6 +826,8 @@ function apply(){
   document.getElementById('ai-grid').innerHTML=d.aiCards.map(c=>`<div class="ai-card"><div class="ai-bar"></div><h3>${c.t}</h3><p>${c.d}</p></div>`).join('');
   s('show-l',d.showL);sh('show-h',d.showH);s('show-s',d.showS);
   document.getElementById('show-grid').innerHTML=d.showCards.map((c,i)=>`<div class="show-card"><div class="show-frame"><img class="show-shot" src="${SCREENSHOTS[lang][i]}" alt="${c.t}" loading="lazy" decoding="async"></div><h3>${c.t}</h3><p>${c.d}</p></div>`).join('');
+  sh('benefits-h',d.benefitsH);s('benefits-s',d.benefitsS);
+  document.getElementById('benefits-grid').innerHTML=d.benefits.map(b=>`<div class="benefit-card"><div class="benefit-mark"></div><h3>${b}</h3></div>`).join('');
   const ph={ 'demo-name':d.demoName,'demo-gym':d.demoGym,'demo-email':d.demoEmail,'demo-phone':d.demoPhone};
   Object.keys(ph).forEach(id=>{const el=document.getElementById(id);if(el)el.placeholder=ph[id]});
   s('demo-btn',d.demoBtn);
