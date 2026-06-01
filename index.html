@@ -302,15 +302,25 @@ body.ar .sec-h{font-family:var(--fa);font-style:normal;font-size:clamp(34px,4.5v
 }
 .show-card:hover{transform:translateY(-4px);border-color:rgba(0,212,255,.32);box-shadow:0 18px 60px rgba(0,0,0,.28)}
 .show-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(0,212,255,.13),transparent 56%);pointer-events:none}
-.show-mini{
-  position:relative;height:124px;border-radius:14px;border:1px solid rgba(0,212,255,.13);
-  background:rgba(2,8,18,.62);padding:14px;display:flex;flex-direction:column;gap:10px;margin-bottom:22px;
+.show-frame{
+  position:relative;margin-bottom:22px;padding:8px;border-radius:16px;
+  border:1px solid rgba(0,212,255,.24);
+  background:linear-gradient(180deg,rgba(2,8,18,.88),rgba(6,17,31,.72));
+  box-shadow:0 0 26px rgba(0,212,255,.12),0 20px 46px rgba(0,0,0,.28);
+  aspect-ratio:16/10;
 }
-.show-line{height:7px;border-radius:10px;background:rgba(0,212,255,.13)}
-.show-line.a{width:70%;background:linear-gradient(90deg,var(--cyan),var(--blue))}
-.show-line.b{width:48%}.show-line.c{width:86%}.show-line.d{width:60%}
-.show-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:auto}
-.show-kpis span{height:28px;border-radius:8px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.08)}
+.show-frame::before{
+  content:'';position:absolute;inset:0;border-radius:16px;pointer-events:none;
+  background:linear-gradient(135deg,rgba(255,255,255,.1),transparent 42%);
+  opacity:.55;
+}
+.show-shot{
+  position:relative;display:block;width:100%;height:100%;max-width:100%;
+  object-fit:contain;object-position:center;
+  border-radius:11px;border:1px solid rgba(0,212,255,.32);
+  background:rgba(2,8,18,.75);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+}
 .show-card h3{position:relative;font-size:15px;font-weight:700;color:var(--white);margin-bottom:8px}
 .show-card p{position:relative;font-size:12px;line-height:1.65;color:var(--dim)}
 .demo-form{margin-top:44px;border:1px solid var(--border);border-radius:18px;background:rgba(2,8,18,.5);padding:18px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) max-content;gap:10px;width:100%;max-width:100%}
@@ -542,6 +552,21 @@ footer{
 </footer>
 
 <script>
+const SCREENSHOTS={
+  en:[
+    'fitnexhq-landing-screenshots/gym-dashboard-en.png',
+    'fitnexhq-landing-screenshots/trainer-dashboard-en.png',
+    'fitnexhq-landing-screenshots/posture-analysis-en.png',
+    'fitnexhq-landing-screenshots/client-progress-en.png'
+  ],
+  ar:[
+    'fitnexhq-landing-screenshots/gym-dashboard-ar.png',
+    'fitnexhq-landing-screenshots/trainer-dashboard-ar.png',
+    'fitnexhq-landing-screenshots/posture-analysis-ar.png',
+    'fitnexhq-landing-screenshots/client-progress-ar.png'
+  ]
+};
+
 const T={
   en:{
     lang:'AR',pill:'COMING SOON · PRIVATE ACCESS',eyebrow:'FITNESS INTELLIGENCE PLATFORM',
@@ -698,7 +723,7 @@ function apply(){
   s('s4l',d.s4l);sh('s4h',d.s4h);
   document.getElementById('ai-grid').innerHTML=d.aiCards.map(c=>`<div class="ai-card"><div class="ai-bar"></div><h3>${c.t}</h3><p>${c.d}</p></div>`).join('');
   s('show-l',d.showL);sh('show-h',d.showH);s('show-s',d.showS);
-  document.getElementById('show-grid').innerHTML=d.showCards.map(c=>`<div class="show-card"><div class="show-mini"><div class="show-line a"></div><div class="show-line b"></div><div class="show-line c"></div><div class="show-kpis"><span></span><span></span><span></span></div></div><h3>${c.t}</h3><p>${c.d}</p></div>`).join('');
+  document.getElementById('show-grid').innerHTML=d.showCards.map((c,i)=>`<div class="show-card"><div class="show-frame"><img class="show-shot" src="${SCREENSHOTS[lang][i]}" alt="${c.t}" loading="lazy" decoding="async"></div><h3>${c.t}</h3><p>${c.d}</p></div>`).join('');
   const ph={ 'demo-name':d.demoName,'demo-gym':d.demoGym,'demo-email':d.demoEmail,'demo-phone':d.demoPhone};
   Object.keys(ph).forEach(id=>{const el=document.getElementById(id);if(el)el.placeholder=ph[id]});
   s('demo-btn',d.demoBtn);
