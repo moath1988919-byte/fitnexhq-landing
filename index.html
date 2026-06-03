@@ -153,8 +153,23 @@ body.ar .hero-h1{
   font-size:clamp(15px,1.45vw,18px);line-height:1.75;
   color:rgba(226,234,248,.52);max-width:560px;margin:0 auto;
 }
+.platform-badges{
+  display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;
+  max-width:760px;margin:28px auto 0;
+}
+.platform-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:8px 13px;border:1px solid rgba(0,212,255,.16);border-radius:999px;
+  background:rgba(2,8,18,.38);color:rgba(226,234,248,.62);
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 0 20px rgba(0,212,255,.06);
+}
+.platform-badge::before{
+  content:'';width:5px;height:5px;border-radius:50%;background:var(--cyan);
+  box-shadow:0 0 12px rgba(0,212,255,.48);
+}
 .hero-btns{
-  display:inline-flex;gap:12px;justify-content:center;margin-top:40px;flex-wrap:wrap;
+  display:inline-flex;gap:12px;justify-content:center;margin-top:34px;flex-wrap:wrap;
   padding:8px;border:1px solid rgba(0,212,255,.14);border-radius:16px;
   background:rgba(2,8,18,.42);backdrop-filter:blur(18px);
   box-shadow:0 0 42px rgba(0,212,255,.12),0 18px 56px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.06);
@@ -546,6 +561,8 @@ footer{
 @media(max-width:560px){
   .ai-grid{grid-template-columns:1fr}
   .hero-btns{flex-direction:column;align-items:center}
+  .platform-badges{margin-top:24px}
+  .platform-badge{width:100%;max-width:300px;justify-content:center;text-align:center}
   .btn-c,.btn-o{width:100%;max-width:300px;text-align:center}
   .demo-form{padding:20px 16px;gap:12px}
   .demo-form button{max-width:none;white-space:normal}
@@ -573,7 +590,13 @@ footer{
     <div class="hero-eyebrow" id="hero-eyebrow">FITNESS INTELLIGENCE PLATFORM</div>
     <h1 class="hero-h1" id="hero-h1">The Operating System<br>for Modern Gyms.</h1>
     <div class="hero-divider"></div>
-    <p class="hero-sub" id="hero-sub">Track revenue, trainer performance, sessions, client progress, and AI assessments from one dashboard built to help gym owners grow with confidence.</p>
+    <p class="hero-sub" id="hero-sub">FITNEX AI is a cloud-based software platform for managing gyms, trainers, clients, assessments, progress, and business performance from one premium dashboard.</p>
+    <div class="platform-badges" id="platform-badges">
+      <span class="platform-badge">Cloud-Based Platform</span>
+      <span class="platform-badge">Works on Desktop &amp; Mobile</span>
+      <span class="platform-badge">Built for Gyms &amp; Trainers</span>
+      <span class="platform-badge">AI-Powered Insights</span>
+    </div>
     <div class="hero-btns">
       <button class="btn-c" id="btn-p" onclick="scrollToDemoForm()">Book a Live Demo</button>
       <button class="btn-o" id="btn-s" onclick="document.getElementById('platform').scrollIntoView({behavior:'smooth'})">Explore the Platform</button>
@@ -743,8 +766,9 @@ const T={
     lang:'AR',pill:'COMING SOON · PRIVATE ACCESS',eyebrow:'FITNESS INTELLIGENCE PLATFORM',
     h1:'The Operating System<br>for Modern Gyms.',
     bgWord:'GYM',ctaBgW:'LAUNCH',scrollTxt:'SCROLL',
-    sub:'Track revenue, trainer performance, sessions, client progress, and AI assessments from one dashboard built to help gym owners grow with confidence.',
+    sub:'FITNEX AI is a cloud-based software platform for managing gyms, trainers, clients, assessments, progress, and business performance from one premium dashboard.',
     btnP:'Book a Live Demo',btnS:'Explore the Platform',navCta:'Book a Live Demo',
+    platformBadges:['Cloud-Based Platform','Works on Desktop & Mobile','Built for Gyms & Trainers','AI-Powered Insights'],
     trust:['Arabic + English ready','Revenue visibility','Trainer accountability','AI assessment reports'],
     marketingTrainer:'Built for modern fitness coaching',
     marketingOwner:'Run your gym with complete visibility',
@@ -808,8 +832,9 @@ const T={
     lang:'EN',pill:'قريباً · وصول خاص',eyebrow:'منصة ذكاء اللياقة البدنية',
     h1:'نظام التشغيل الذكي<br><span class="hl">لإدارة</span><br>النوادي الحديثة.',
     bgWord:'نادي',ctaBgW:'إطلاق',scrollTxt:'للأسفل',
-    sub:'تتبّع الإيرادات، أداء المدربين، الحصص، تقدم العملاء، وتقييمات الذكاء الاصطناعي من لوحة واحدة تساعد أصحاب النوادي على النمو بثقة.',
+    sub:'FITNEX AI منصة برمجية سحابية لإدارة النوادي والمدربين والعملاء والتقييمات والتقدم وأداء الأعمال من لوحة تحكم واحدة احترافية.',
     btnP:'احجز عرضًا مباشرًا',btnS:'استكشف المنصة',navCta:'احجز عرضًا مباشرًا',
+    platformBadges:['منصة سحابية','تعمل على الكمبيوتر والهاتف','مصممة للنوادي والمدربين','تحليلات مدعومة بالذكاء الاصطناعي'],
     trust:['جاهز للعربية والإنجليزية','وضوح الإيرادات','محاسبة المدربين','تقارير تقييم ذكية'],
     marketingTrainer:'مصمم لتجربة تدريب حديثة',
     marketingOwner:'أدر ناديك برؤية كاملة',
@@ -895,6 +920,7 @@ function apply(){
   s('scroll-txt',d.scrollTxt);
   s('hero-sub',d.sub);
   s('btn-p',d.btnP);s('btn-s',d.btnS);s('nav-cta',d.navCta);
+  document.getElementById('platform-badges').innerHTML=d.platformBadges.map(t=>`<span class="platform-badge">${t}</span>`).join('');
   document.getElementById('trust-strip').innerHTML=d.trust.map(t=>`<span class="trust-item">${t}</span>`).join('');
   sh('marketing-trainer-h',d.marketingTrainer);
   sh('marketing-owner-h',d.marketingOwner);
