@@ -209,6 +209,38 @@ body.ar .hero-h1{
   box-shadow:0 0 14px rgba(0,212,255,.45);
 }
 
+.marketing-section{padding:90px 52px;max-width:1200px;margin:0 auto}
+.marketing-section-hero{padding-top:86px}
+.marketing-section-showcase{padding:72px 0 0}
+.marketing-section-form{padding:72px 0 0}
+.marketing-title{
+  font-family:var(--fe);font-weight:700;font-style:normal;
+  font-size:clamp(32px,4.2vw,58px);line-height:1.08;letter-spacing:0;
+  color:var(--white);max-width:760px;margin-bottom:28px;
+}
+body.ar .marketing-title{
+  font-family:var(--fa);font-weight:700;font-style:normal;
+  font-size:clamp(30px,4vw,52px);line-height:1.18;letter-spacing:0;
+}
+.marketing-frame{
+  position:relative;overflow:hidden;border-radius:24px;padding:6px;
+  border:1px solid rgba(0,212,255,.22);
+  background:linear-gradient(180deg,rgba(2,8,18,.9),rgba(6,17,31,.68));
+  box-shadow:0 0 38px rgba(0,212,255,.13),0 28px 80px rgba(0,0,0,.35);
+}
+.marketing-frame::before{
+  content:'';position:absolute;inset:0;pointer-events:none;border-radius:24px;
+  background:linear-gradient(135deg,rgba(255,255,255,.1),transparent 44%);
+  opacity:.48;z-index:1;
+}
+.marketing-img{
+  display:block;width:100%;height:auto;max-width:100%;border-radius:18px;
+  border:1px solid rgba(0,212,255,.28);background:rgba(2,8,18,.75);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+  transition:transform .42s ease;
+}
+.marketing-frame:hover .marketing-img{transform:scale(1.012)}
+
 /* ── NUM BAND ── */
 .num-band{
   display:grid;grid-template-columns:repeat(3,1fr);
@@ -499,6 +531,8 @@ footer{
   .num-band{grid-template-columns:1fr}
   .num-cell{border-right:none;border-bottom:1px solid var(--border2);padding:32px}
   .sec{padding:72px 20px}
+  .marketing-section{padding:72px 20px}
+  .marketing-section-showcase,.marketing-section-form{padding:58px 0 0}
   .feat-grid{grid-template-columns:1fr}
   .gym-row{grid-template-columns:1fr;gap:44px}
   .ai-grid{grid-template-columns:1fr 1fr}
@@ -546,6 +580,13 @@ footer{
     </div>
   </div>
   <div class="scroll-hint"><span id="scroll-txt">SCROLL</span><div class="scroll-track"><div class="scroll-runner"></div></div></div>
+</section>
+
+<section class="marketing-section marketing-section-hero reveal">
+  <h2 class="marketing-title" id="marketing-trainer-h">Built for modern fitness coaching</h2>
+  <div class="marketing-frame">
+    <img class="marketing-img" id="marketing-trainer-img" src="fitnexhq-landing-screenshots/ChatGPT%20Image%20Jun%203,%202026,%2010_10_02%20AM.png" alt="Trainer explaining FITNEX AI" loading="lazy" decoding="async">
+  </div>
 </section>
 
 <div class="trust-strip reveal" id="trust-strip">
@@ -625,12 +666,24 @@ footer{
     <h2 class="sec-h" id="show-h">See the system your gym will run on.</h2>
     <p class="sec-sub" id="show-s">A premium command experience for owners, managers, trainers, and client progress.</p>
     <div class="showcase-grid" id="show-grid"></div>
+    <div class="marketing-section marketing-section-showcase">
+      <h2 class="marketing-title" id="marketing-owner-h">Run your gym with complete visibility</h2>
+      <div class="marketing-frame">
+        <img class="marketing-img" id="marketing-owner-img" src="fitnexhq-landing-screenshots/ChatGPT%20Image%20Jun%203,%202026,%2010_02_15%20AM.png" alt="Gym owner executive dashboard" loading="lazy" decoding="async">
+      </div>
+    </div>
     <div class="benefits-block">
       <div class="benefits-head">
         <h2 class="benefits-title" id="benefits-h">Built to improve gym performance</h2>
         <p class="sec-sub" id="benefits-s">FITNEX AI helps owners and managers see what is happening across trainers, clients, sessions, and revenue — from one premium dashboard.</p>
       </div>
       <div class="benefits-grid" id="benefits-grid"></div>
+    </div>
+    <div class="marketing-section marketing-section-form">
+      <h2 class="marketing-title" id="marketing-posture-h">AI-powered posture analysis</h2>
+      <div class="marketing-frame">
+        <img class="marketing-img" id="marketing-posture-img" src="fitnexhq-landing-screenshots/ChatGPT%20Image%20Jun%203,%202026,%2010_07_25%20AM.png" alt="AI posture analysis" loading="lazy" decoding="async">
+      </div>
     </div>
     <form class="demo-form" id="demo-form" action="https://formspree.io/f/xredvnkg" method="POST" novalidate>
       <input type="hidden" name="_subject" value="FITNEX AI Lead Request" />
@@ -693,6 +746,9 @@ const T={
     sub:'Track revenue, trainer performance, sessions, client progress, and AI assessments from one dashboard built to help gym owners grow with confidence.',
     btnP:'Book a Live Demo',btnS:'Explore the Platform',navCta:'Book a Live Demo',
     trust:['Arabic + English ready','Revenue visibility','Trainer accountability','AI assessment reports'],
+    marketingTrainer:'Built for modern fitness coaching',
+    marketingOwner:'Run your gym with complete visibility',
+    marketingPosture:'AI-powered posture analysis',
     n1:'4,070',n2:'22',n3:'91',nl1:'REVENUE PERFORMANCE',nl2:'COMPLETED SESSIONS',nl3:'TRAINER EFFICIENCY',
     mq:['Business Visibility','Trainer Workspace','Smart Scheduling','Revenue Insights','AI Posture Analysis','Built to Scale','Performance Reports','Package Logic'],
     s1l:'GYM COMMAND CENTER',s1h:'Everything You Need to Grow Your Gym.',s1s:'Monitor performance, manage operations, track revenue, and make smarter business decisions from one executive dashboard.',
@@ -755,6 +811,9 @@ const T={
     sub:'تتبّع الإيرادات، أداء المدربين، الحصص، تقدم العملاء، وتقييمات الذكاء الاصطناعي من لوحة واحدة تساعد أصحاب النوادي على النمو بثقة.',
     btnP:'احجز عرضًا مباشرًا',btnS:'استكشف المنصة',navCta:'احجز عرضًا مباشرًا',
     trust:['جاهز للعربية والإنجليزية','وضوح الإيرادات','محاسبة المدربين','تقارير تقييم ذكية'],
+    marketingTrainer:'مصمم لتجربة تدريب حديثة',
+    marketingOwner:'أدر ناديك برؤية كاملة',
+    marketingPosture:'تحليل القوام بالذكاء الاصطناعي',
     n1:'4,070',n2:'22',n3:'91',nl1:'أداء الإيرادات',nl2:'الحصص المكتملة',nl3:'كفاءة المدربين',
     mq:['وضوح الأعمال','مساحة عمل المدرب','جدولة ذكية','رؤى الإيرادات','تحليل القوام بالذكاء الاصطناعي','تعدد النوادي','تقارير الأداء','منطق البكجات'],
     s1l:'مركز قيادة النادي',s1h:'كل ما تحتاجه لتنمية ناديك.',s1s:'راقب الأداء، أدر العمليات، تتبع الإيرادات، واتخذ قرارات أفضل من داشبورد إداري واحد.',
@@ -837,6 +896,9 @@ function apply(){
   s('hero-sub',d.sub);
   s('btn-p',d.btnP);s('btn-s',d.btnS);s('nav-cta',d.navCta);
   document.getElementById('trust-strip').innerHTML=d.trust.map(t=>`<span class="trust-item">${t}</span>`).join('');
+  sh('marketing-trainer-h',d.marketingTrainer);
+  sh('marketing-owner-h',d.marketingOwner);
+  sh('marketing-posture-h',d.marketingPosture);
   s('n1',d.n1);s('n2',d.n2);s('n3',d.n3);
   s('nl1',d.nl1);s('nl2',d.nl2);s('nl3',d.nl3);
   s('s1l',d.s1l);sh('s1h',d.s1h);s('s1s',d.s1s);
