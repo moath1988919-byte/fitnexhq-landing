@@ -195,6 +195,7 @@ body.ar .hero-h1{
   padding:16px 38px;border-radius:9px;font-size:14px;font-weight:600;
   border:1px solid var(--border);cursor:pointer;
   letter-spacing:.03em;font-family:var(--fe);transition:all .22s;
+  text-decoration:none;display:inline-block;
 }
 .btn-o:hover{background:rgba(0,212,255,.1);border-color:rgba(0,212,255,.25)}
 .scroll-hint{
@@ -604,6 +605,7 @@ footer{
     </div>
     <div class="hero-btns">
       <button class="btn-c" id="btn-p" onclick="scrollToDemoForm()">Book a Live Demo</button>
+      <a class="btn-o" id="btn-demo" href="https://fitnex-ai-beta-q4st.vercel.app/demo">Explore Demo</a>
       <button class="btn-o" id="btn-s" onclick="document.getElementById('platform').scrollIntoView({behavior:'smooth'})">Explore the Platform</button>
     </div>
   </div>
@@ -776,7 +778,7 @@ const T={
     h1:'The Operating System<br>for Modern Gyms.',
     bgWord:'GYM',ctaBgW:'LAUNCH',scrollTxt:'SCROLL',
     sub:'FITNEX AI is a cloud-based software platform for managing gyms, trainers, clients, assessments, progress, and business performance from one premium dashboard.',
-    btnP:'Book a Live Demo',btnS:'Explore the Platform',navCta:'Book a Live Demo',
+    btnP:'Book a Live Demo',btnS:'Explore the Platform',demoExplore:'Explore Demo',navCta:'Book a Live Demo',
     platformBadges:['Cloud-Based Platform','Works on Desktop & Mobile','Built for Gyms & Trainers','AI-Powered Insights'],
     trust:['Arabic + English ready','Revenue visibility','Trainer accountability','AI assessment reports'],
     marketingTrainer:'Built for modern fitness coaching',
@@ -842,7 +844,7 @@ const T={
     h1:'نظام التشغيل الذكي<br><span class="hl">لإدارة</span><br>النوادي الحديثة.',
     bgWord:'نادي',ctaBgW:'إطلاق',scrollTxt:'للأسفل',
     sub:'FITNEX AI منصة برمجية سحابية لإدارة النوادي والمدربين والعملاء والتقييمات والتقدم وأداء الأعمال من لوحة تحكم واحدة احترافية.',
-    btnP:'احجز عرضًا مباشرًا',btnS:'استكشف المنصة',navCta:'احجز عرضًا مباشرًا',
+    btnP:'احجز عرضًا مباشرًا',btnS:'استكشف المنصة',demoExplore:'استكشف الديمو',navCta:'احجز عرضًا مباشرًا',
     platformBadges:['منصة سحابية','تعمل على الكمبيوتر والهاتف','مصممة للنوادي والمدربين','تحليلات مدعومة بالذكاء الاصطناعي'],
     trust:['جاهز للعربية والإنجليزية','وضوح الإيرادات','محاسبة المدربين','تقارير تقييم ذكية'],
     marketingTrainer:'مصمم لتجربة تدريب حديثة',
@@ -928,7 +930,7 @@ function apply(){
   s('cta-bg-w',d.ctaBgW);
   s('scroll-txt',d.scrollTxt);
   s('hero-sub',d.sub);
-  s('btn-p',d.btnP);s('btn-s',d.btnS);s('nav-cta',d.navCta);
+  s('btn-p',d.btnP);s('btn-demo',d.demoExplore);s('btn-s',d.btnS);s('nav-cta',d.navCta);
   document.getElementById('platform-badges').innerHTML=d.platformBadges.map(t=>`<span class="platform-badge">${t}</span>`).join('');
   document.getElementById('trust-strip').innerHTML=d.trust.map(t=>`<span class="trust-item">${t}</span>`).join('');
   sh('marketing-trainer-h',d.marketingTrainer);
